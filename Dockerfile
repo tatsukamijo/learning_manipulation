@@ -67,7 +67,17 @@ RUN echo 'export LD_LIBRARY_PATH=/root/.mujoco/mujoco200/bin:${LD_LIBRARY_PATH}'
 # Install Python packages.
 RUN pip install mujoco gym torch==2.0.0 torchvision==0.15.1
 
-# # Robosuite dependencies
-# WORKDIR /root/workspace/robosuite
-# RUN 
+# Robosuite dependencies
+WORKDIR /root/workspace/robosuite
+RUN pip install -e .
+RUN pip install -r requirements-extra.txt
 
+# Robomimic dependencies
+WORKDIR /root/workspace/robomimic
+RUN pip install -e .
+
+WORKDIR /root/workspace
+
+ENV PYTHONPATH="/root/workspace/robosuite:$PYTHONPATH"
+
+CMD ["bin/bash"]
