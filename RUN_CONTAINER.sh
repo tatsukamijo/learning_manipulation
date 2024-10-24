@@ -1,7 +1,8 @@
 #!/bin/bash
 
+NAME=$1
 PROJECT_NAME=learning_manipulation
-PROJECT_CONTAINER_NAME=learning_manipulation
+PROJECT_CONTAINER_NAME="${NAME}_learning_manipulation"
 CONTAINER_NAME=${PROJECT_CONTAINER_NAME}
 IMAGE_NAME=${PROJECT_NAME}
 TAG_NAME=latest

@@ -1,6 +1,9 @@
 ARG cuda_docker_tag="11.2.2-cudnn8-devel-ubuntu20.04"
 FROM nvidia/cuda:${cuda_docker_tag}
 
+WORKDIR /root/workspace
+COPY . /root/workspace
+
 RUN apt-get update
 
 # tzdata is required below. To avoid hanging, install it first.
@@ -51,7 +54,7 @@ RUN apt-get install \
   libxcursor1 \
   vim \
   openssh-server \
-  curl
+  qt5-default
 
 # Download and install mujoco.
 RUN wget https://www.roboti.us/download/mujoco200_linux.zip
@@ -79,5 +82,8 @@ RUN pip install -e .
 WORKDIR /root/workspace
 
 ENV PYTHONPATH="/root/workspace/robosuite:$PYTHONPATH"
+RUN export MUJOCO_GL=osmesa
+# export in ~/.bashrc
+RUN echo 'export MUJOCO_GL=osmesa' >> /root/.bashrc
 
 CMD ["bin/bash"]
